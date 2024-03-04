@@ -2,7 +2,8 @@
 FROM tomcat:latest
 
 # Copy the WAR file into the webapps directory of Tomcat
-COPY *.war /usr/local/tomcat/webapps/
+COPY ./target/*.war /usr/local/tomcat/webapps/
+RUN pwd
 
 # Copy context.xml for host-manager application
 COPY context.xml /usr/local/tomcat/webapps/host-manager/META-INF/
