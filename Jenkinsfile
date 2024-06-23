@@ -38,8 +38,8 @@ pipeline {
         stage('Build-Docker-image') {
             steps {
                 script {
-                        sh 'sudo -i'
-                        sh 'chmod 777 *' 
+                        //sh 'sudo -i'
+                        //sh 'chmod 777 *' 
                        //  sh 'sudo docker build -t rupeshrk004/newrepoonline:$BUILD_NUMBER .'           
                      def customTag = "${env.BUILD_NUMBER}"
                     def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", "--file ${DOCKERFILE_PATH} .")
