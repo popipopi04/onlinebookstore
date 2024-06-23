@@ -38,15 +38,10 @@ pipeline {
             steps {
                 script {
                     sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 752378938230.dkr.ecr.us-west-2.amazonaws.com'
-                    // def customTag = "${env.BUILD_NUMBER}"
-                    // def dockerImage = docker.image("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}")
-                    
-                     // Login to ECR using AWS credentials
-                    // docker.withRegistry('', 'ecr:752378938230') {
-                    //     dockerImage.push()
-                    docker.withRegistry('https://752378938230.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")    
+                    docker.withRegistry('https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com', 'ecr:752378938230') {
+                        def customTag = "${env.BUILD_NUMBER}"
+                        def dockerImage = docker.image("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}")
+                        dockerImage.push()
                 }
                 }
             }
