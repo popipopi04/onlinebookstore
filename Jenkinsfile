@@ -44,7 +44,7 @@ pipeline {
                     // docker.withRegistry('https://' + AWS_DEFAULT_REGION + '.dkr.ecr.' + AWS_DEFAULT_REGION + '.amazonaws.com', 'ecr:your-ecr-credentials') {
                     //     def customImage = docker.build("${AWS_DEFAULT_REGION}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", "--file ${DOCKERFILE_PATH} .")
                     //     customImage.push()
-                    }
+                    //}
                 }
             }
         }
