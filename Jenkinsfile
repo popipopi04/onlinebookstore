@@ -13,16 +13,16 @@ pipeline {
                git 'https://github.com/Rupeshkr004/onlinebookstore.git'
             }
         }
-          stage('SonarQube Analysis') {
-            steps {
+        //   stage('SonarQube Analysis') {
+        //     steps {
                 
-                withSonarQubeEnv('sonar') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=onlineBook -Dsonar.projectName=onlineBook \
-                    -Dsonar.java.binaries=. '''
-                }
-            }
-        }
-        //         node {
+        //         withSonarQubeEnv('sonar') {
+        //             sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=onlineBook -Dsonar.projectName=onlineBook \
+        //             -Dsonar.java.binaries=. '''
+        //         }
+        //     }
+        // }
+        // //         node {
         //   stage('SCM') {
         //     checkout scm
         //   }
