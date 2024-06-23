@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     def customTag = "${env.BUILD_NUMBER}"
-                    def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", "-f ${DOCKERFILE_PATH} .")
+                    def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
                     dockerImage.push()
                 }
             }
