@@ -29,7 +29,7 @@ pipeline {
                 script {
                     def customTag = "${env.BUILD_NUMBER}"
                     def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
-                    dockerImage.push()
+                    //dockerImage.push()
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                     // def customTag = "${env.BUILD_NUMBER}"
                     // def dockerImage = docker.image("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}")
                     
-                    // // Login to ECR using AWS credentials
+                     // Login to ECR using AWS credentials
                     // docker.withRegistry('', 'ecr:752378938230') {
                     //     dockerImage.push()
                     docker.withRegistry('https://752378938230.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-credentials') {
