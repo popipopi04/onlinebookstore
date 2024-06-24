@@ -26,6 +26,16 @@ pipeline {
                 sh 'mvn compile'
             }
         }
+        stage('Unit Tests') {
+            steps {
+                sh "mvn test -DskipTests=true"
+            }
+        }
+        stage('Build'){
+            steps{
+                sh 'mvn package -DskipTests=true'
+            }
+        }
         
         stage('Build-Docker-image') {
             steps {
