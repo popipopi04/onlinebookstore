@@ -71,7 +71,6 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} << EOF
                                 echo "Minikube server login success"
                                 kubectl get pods -n kube-system
-                            EOF
                             """
                         }
                     }
