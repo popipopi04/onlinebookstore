@@ -44,6 +44,9 @@ pipeline {
                     // def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
                     //dockerImage.push()
                     dockerImage = docker.build "${IMAGE_REPO_NAME}:${env.BUILD_NUMBER}"
+                    echo 'pushing kubernetes manifest files to minikuber server'
+                    sh ' scp -i /home/ubuntu/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
+                    echo 'pushed manfest files sucessfully'
                 }
             }
         }
@@ -80,6 +83,7 @@ pipeline {
                             echo "Trying to SSH into Minikube server"
                             ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} << EOF
                                 echo "Minikube server login success"
+                                cd 
                                 kubectl get pods -n kube-system
                             """
                         }
