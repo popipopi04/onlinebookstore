@@ -69,10 +69,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} '
     
                         echo "Minikuber server login success"                    
-                        // kubectl apply -f /path/to/your/deployment.yaml
-                        // kubectl apply -f /path/to/your/service.yaml
-                        // '
-                        // """
+                        """
                         
                         }
                     }
