@@ -18,6 +18,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 git 'https://github.com/popipopi04/onlinebookstore.git'
+                echo 'pushing kubernetes manifest files to minikuber server'
+                    sh ' scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
+                    echo 'pushed manfest files sucessfully'
             }
         }
         
@@ -44,9 +47,7 @@ pipeline {
                     // def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
                     //dockerImage.push()
                     dockerImage = docker.build "${IMAGE_REPO_NAME}:${env.BUILD_NUMBER}"
-                    echo 'pushing kubernetes manifest files to minikuber server'
-                    sh ' scp -i /home/ubuntu/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
-                    echo 'pushed manfest files sucessfully'
+                    
                 }
             }
         }
