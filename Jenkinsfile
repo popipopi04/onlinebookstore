@@ -18,9 +18,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 git 'https://github.com/popipopi04/onlinebookstore.git'
-                echo 'pushing kubernetes manifest files to minikuber server'
-                    sh ' scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
-                    echo 'pushed manfest files sucessfully'
+                // echo 'pushing kubernetes manifest files to minikuber server'
+                //     sh ' scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
+                //     echo 'pushed manfest files sucessfully'
             }
         }
         
@@ -81,6 +81,8 @@ pipeline {
                         // Use SSH Agent to connect to the Minikube server and run kubectl commands
                         sshagent([SSH_CREDENTIALS_ID]) {
                             sh """
+                            scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/
+
                             echo "Trying to SSH into Minikube server"
                             ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} << EOF
                                 echo "Minikube server login success"
