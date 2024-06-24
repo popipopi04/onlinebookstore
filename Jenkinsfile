@@ -9,6 +9,7 @@ pipeline {
         AWS_ACCOUNT_ID = '752378938230'   // Replace with your AWS account ID
         IMAGE_REPO_NAME = 'onlinebookstore' // Replace with your ECR repository name
         DOCKERFILE_PATH = './Dockerfile'  // Path to your Dockerfile
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     
     stages {
@@ -27,21 +28,32 @@ pipeline {
         stage('Build-Docker-image') {
             steps {
                 script {
-                    def customTag = "${env.BUILD_NUMBER}"
-                    def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
+                    // def customTag = "${env.BUILD_NUMBER}"
+                    // def dockerImage = docker.build("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}", " .")
                     //dockerImage.push()
+                    dockerImage = docker.build "${IMAGE_REPO_NAME}:${env.BUILD_NUMBER}"
                 }
+            }
+        }
+         stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 752378938230.dkr.ecr.us-west-2.amazonaws.com"
+                }
+                 
             }
         }
         
         stage('Push to AWS ECR') {
             steps {
                 script {
+                     sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$env.BUILD_NUMBER"
+                     sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${env.BUILD_NUMBER}"
                     // sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 752378938230.dkr.ecr.us-west-2.amazonaws.com'
-                    docker.withRegistry('https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com', 'ecr:aws-credentials') {
-                        def customTag = "${env.BUILD_NUMBER}"
-                        def dockerImage = docker.image("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}")
-                        dockerImage.push()
+                    // docker.withRegistry('https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com', 'ecr:aws-credentials') {
+                    //     def customTag = "${env.BUILD_NUMBER}"
+                    //     def dockerImage = docker.image("${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${customTag}")
+                    //     dockerImage.push()
                 }
                 }
             }
