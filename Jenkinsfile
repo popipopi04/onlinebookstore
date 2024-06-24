@@ -62,15 +62,21 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    // Use SSH Agent to connect to the Minikube server and run kubectl commands
-                    sshagent([SSH_CREDENTIALS_ID]) {
-                        sh """
-                        echo "trying to do ssh of minikuber"
-                        ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} '
-    
-                        echo "Minikuber server login success"                    
-                        """
-                        
+                    // Retrieve the Minikube server IP securely
+                    withCredentials([string(credentialsId: 'minikube-server-ip', variable: 'MINIKUBE_SERVER')]) {
+                        // Use SSH Agent to connect to the Minikube server and run kubectl commands
+                        sshagent([SSH_CREDENTIALS_ID]) {
+                            sh """
+                            echo "Trying to SSH into Minikube server"
+                            ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} << EOF
+                                echo "Minikube server login success"
+                                kubectl apply -f /path/to/your/deployment.yaml
+                                kubectl apply -f /path/to/your/service.yaml
+                            EOF
+                            """
+                        }
+                    }
+                    
                         }
                     }
                 }
