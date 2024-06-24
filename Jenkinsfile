@@ -70,8 +70,7 @@ pipeline {
                             echo "Trying to SSH into Minikube server"
                             ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} << EOF
                                 echo "Minikube server login success"
-                                kubectl apply -f /path/to/your/deployment.yaml
-                                kubectl apply -f /path/to/your/service.yaml
+                                kubectl get pods -n kube-system
                             EOF
                             """
                         }
