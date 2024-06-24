@@ -10,6 +10,8 @@ pipeline {
         IMAGE_REPO_NAME = 'onlinebookstore' // Replace with your ECR repository name
         DOCKERFILE_PATH = './Dockerfile'  // Path to your Dockerfile
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        SSH_CREDENTIALS_ID = 'minikube-ssh-key' // ID of the SSH key credential
+        MINIKUBE_SERVER = credentials('minikube-server-ip')
     }
     
     stages {
@@ -57,5 +59,25 @@ pipeline {
                 }
                 }
             }
+        stages {
+        stage('Deploy to Minikube') {
+            steps {
+                script {
+                    // Use SSH Agent to connect to the Minikube server and run kubectl commands
+                    sshagent([SSH_CREDENTIALS_ID]) {
+                        sh """
+                        echo "trying to do ssh of minikuber"
+                        ssh -o StrictHostKeyChecking=no ubuntu@${MINIKUBE_SERVER} '
+    
+                        echo "Minikuber server login success"                    
+                        // kubectl apply -f /path/to/your/deployment.yaml
+                        // kubectl apply -f /path/to/your/service.yaml
+                        // '
+                        // """
+                        
+                    }
+                }
+            }
+        }
         }
     }
