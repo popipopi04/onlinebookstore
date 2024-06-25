@@ -5,15 +5,15 @@ metadata:
   labels:
     app: onlinebookstore
 spec:
-  replicas: 1  # Number of desired pods
+  replicas: 1
   selector:
     matchLabels:
       app: onlinebookstore
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0  # Ensure zero downtime
-      maxSurge: 1        # Allow one extra pod during the update
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -21,20 +21,20 @@ spec:
     spec:
       containers:
       - name: onlinebookstore
-        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:55  # Your ECR image
+        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:55
         ports:
         - containerPort: 8080
-        # readinessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8083
-        #   initialDelaySeconds: 5
-        #   periodSeconds: 10
-        # livenessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 8083
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /onlinebookstore/
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /onlinebookstore/
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
       imagePullSecrets:
-      - name: aws-ecr-docker-secret  # Reference to the Docker registry secret
+      - name: aws-ecr-docker-secret
