@@ -21,20 +21,20 @@ spec:
     spec:
       containers:
       - name: onlinebookstore
-        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:54  # Your ECR image
+        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:55  # Your ECR image
         ports:
-        - containerPort: 8083
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8083
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8083
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        - containerPort: 8080
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8083
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8083
+        #   initialDelaySeconds: 15
+        #   periodSeconds: 20
       imagePullSecrets:
       - name: aws-ecr-docker-secret  # Reference to the Docker registry secret
