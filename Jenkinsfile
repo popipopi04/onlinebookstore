@@ -88,6 +88,7 @@ pipeline {
                                 echo "Minikube server login success"
                                 cd 
                                 kubectl get pods -n kube-system
+                                kubectl apply -k .
                             """
                         }
                     }
