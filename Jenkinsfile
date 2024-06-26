@@ -92,10 +92,12 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: env.GITHUB_CREDENTIALS_ID, variable: 'GITHUB_TOKEN')]) {
                     sh """
-                        git config --global user.email "Pradeepa@gmail.com"
+                         git config --global user.email "Pradeepa@gmail.com"
                         git config --global user.name "Pradeeoa"
-                        git add $DEPLOYMENT_FILE
-                        git commit -m "Update deployment file with build number ${BUILD_NUMBER}"
+                        cd ${env.WORKSPACE}
+                        git remote set-url origin https://${GITHUB_TOKEN}@github.com/popipopi04/onlinebookstore.git
+                        git add ${env.DEPLOYMENT_FILE}
+                        git commit -m "Update deployment file with build number ${env.BUILD_NUMBER}"
                         git push origin ${env.GIT_BRANCH}
                     """
                 }
