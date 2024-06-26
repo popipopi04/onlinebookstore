@@ -74,18 +74,12 @@ pipeline {
                 }
                 }
             }
-        stage('Deploy to Minikube') {
+        stage('Update Deployment File') {
             steps {
                 script {
                             def buildNumber = env.BUILD_NUMBER
                             sh """
                              sed -i 's|\\(image: $REPOSITORY_URI:\\)[0-9]\\+|\\1$buildNumber|g' $DEPLOYMENT_FILE
-                             
-                            // echo "Trying to SSH into Minikube server"
-                            //     echo "Minikube server login success"
-                            //     cd 
-                            //     kubectl get pods -n kube-system
-                                //kubectl apply -k .
                             """
                         }
                     }
