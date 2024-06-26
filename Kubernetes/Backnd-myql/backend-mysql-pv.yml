@@ -1,34 +1,33 @@
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   annotations:
-    hostPathProvisionerIdentity: 01c8aceb-4ca7-47a1-adc5-4a229a446c46
-    pv.kubernetes.io/provisioned-by: k8s.io/minikube-hostpath
-  creationTimestamp: "2024-06-24T18:42:29Z"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"PersistentVolume","metadata":{"annotations":{},"name":"efs-pv"},"spec":{"accessModes":["ReadWriteOnce"],"capacity":{"storage":"5Gi"},"csi":{"driver":"efs.csi.aws.com","volumeHandle":"fs-0c9151f8ae16fc68a"},"persistentVolumeReclaimPolicy":"Retain","storageClassName":"","volumeMode":"Filesystem"}}
+    pv.kubernetes.io/bound-by-controller: "yes"
+  creationTimestamp: "2024-06-26T07:08:51Z"
   finalizers:
   - kubernetes.io/pv-protection
-  name: pvc-76eb5a4c-c233-456a-934d-6f7bb2cb43dd
-  resourceVersion: "20630"
-  uid: 772cada1-664b-4aa3-858a-da23c5cf44e0
+  name: efs-pv
+  resourceVersion: "150027"
+  uid: eba1389a-8a85-4b66-bcc8-5233c65cc007
 spec:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   claimRef:
     apiVersion: v1
     kind: PersistentVolumeClaim
-    name: mysql-pv-claim
+    name: efs-claim
     namespace: default
-    resourceVersion: "20626"
-    uid: 76eb5a4c-c233-456a-934d-6f7bb2cb43dd
-  hostPath:
-    path: /tmp/hostpath-provisioner/default/mysql-pv-claim
-    type: ""
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: standard
+    resourceVersion: "150024"
+    uid: 7191eff6-994a-4178-8516-3aaf483de1e2
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0c9151f8ae16fc68a
+  persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
 status:
-  lastPhaseTransitionTime: "2024-06-24T18:42:29Z"
+  lastPhaseTransitionTime: "2024-06-26T07:10:35Z"
   phase: Bound
