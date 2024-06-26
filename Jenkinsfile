@@ -78,9 +78,9 @@ pipeline {
             steps {
                 script {
                     // Retrieve the Minikube server IP securely
-                    withCredentials([string(credentialsId: 'minikube-server-ip', variable: 'MINIKUBE_SERVER')]) {
+                    // withCredentials([string(credentialsId: 'minikube-server-ip', variable: 'MINIKUBE_SERVER')]) {
                         // Use SSH Agent to connect to the Minikube server and run kubectl commands
-                        sshagent([SSH_CREDENTIALS_ID]) {
+                        // sshagent([SSH_CREDENTIALS_ID]) {
                             def buildNumber = env.BUILD_NUMBER
                             sh """
                             // scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/
