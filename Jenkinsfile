@@ -13,6 +13,7 @@ pipeline {
         // SSH_CREDENTIALS_ID = 'minikube-ssh-key' // ID of the SSH key credential
         // MINIKUBE_SERVER = credentials('minikube-server-ip')
         DEPLOYMENT_FILE = '/var/lib/jenkins/workspace/onlinebookstore/Kubernetes/web-app/wbapp-onlinebookstore-deployment.yml'
+        GITHUB_CREDENTIALS_ID = 'Gitub-credentials'
     }
     
     stages {
@@ -86,5 +87,18 @@ pipeline {
                     }
                     
                         }
+         stage('Commit and Push Changes') {
+            steps {
+                withCredentials([string(credentialsId: env.GITHUB_CREDENTIALS_ID, variable: 'GITHUB_TOKEN')]) {
+                    sh """
+                        git config --global user.email "Pradeepa@gmail.com"
+                        git config --global user.name "Pradeeoa"
+                        git add $DEPLOYMENT_FILE
+                        git commit -m "Update deployment file with build number ${BUILD_NUMBER}"
+                        git push origin main
+                    """
                 }
+            }
         }
+    }
+}
