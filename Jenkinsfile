@@ -12,7 +12,7 @@ pipeline {
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
         // SSH_CREDENTIALS_ID = 'minikube-ssh-key' // ID of the SSH key credential
         // MINIKUBE_SERVER = credentials('minikube-server-ip')
-        DEPLOYMENT_FILE = 'Kubernetes/web-app/wbapp-onlinebookstore-deployment.yml'
+        DEPLOYMENT_FILE = '/var/lib/jenkins/workspace/onlinebookstore/Kubernetes/web-app/wbapp-onlinebookstore-deployment.yml'
     }
     
     stages {
