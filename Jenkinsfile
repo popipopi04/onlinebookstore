@@ -30,7 +30,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 
-                withSonarQubeEnv('sonar-scanner') {
+                withSonarQubeEnv('sonar') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=onlineBook -Dsonar.projectName=onlineBook \
                     -Dsonar.java.binaries=. '''
                 }
