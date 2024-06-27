@@ -15,6 +15,7 @@ pipeline {
         DEPLOYMENT_FILE = '/var/lib/jenkins/workspace/onlinebookstore/Kubernetes/web-app/wbapp-onlinebookstore-deployment.yml'
         GITHUB_CREDENTIALS_ID = 'Gitub-credentials'
         GIT_BRANCH = 'master'
+        SCANNER_HOME= tool 'sonar-scanner'
     }
     
     stages {
@@ -24,6 +25,15 @@ pipeline {
                 // echo 'pushing kubernetes manifest files to minikuber server'
                 //     sh ' scp -i /home/ubuntu/minikube-key/sshkey.pem /var/lib/jenkins/workspace/onlinebookstore/Kubernetes/* ubuntu@172.31.28.39:/Kubernetes-manifest/'                 
                 //     echo 'pushed manfest files sucessfully'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                
+                withSonarQubeEnv('sonar') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=onlineBook -Dsonar.projectName=onlineBook \
+                    -Dsonar.java.binaries=. '''
+                }
             }
         }
         
