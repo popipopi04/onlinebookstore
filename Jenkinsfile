@@ -15,7 +15,7 @@ pipeline {
         DEPLOYMENT_FILE = '/var/lib/jenkins/workspace/onlinebookstore/Kubernetes/web-app/wbapp-onlinebookstore-deployment.yml'
         GITHUB_CREDENTIALS_ID = 'Gitub-credentials'
         GIT_BRANCH = 'master'
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'sonar'
     }
     
     stages {
