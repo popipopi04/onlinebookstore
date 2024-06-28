@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: onlinebookstore
-        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:73
+        image: 752378938230.dkr.ecr.us-west-2.amazonaws.com/onlinebookstore:74
         ports:
         - containerPort: 8080
         readinessProbe:
